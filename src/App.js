@@ -54,4 +54,59 @@ function App() {
  const resetArr = () => {
   setNewArtWorks2(null);
  }
- }
+ 
+
+ return (
+  <div className="App">
+    <Form
+    newArtHandler = {artHandler}
+    />
+    <button onClick={resetArr}>Reset</button>
+  <div className="media-scroller2">
+    {newArtWorks2 && 
+      <CardList
+        title = {newArtWorks2.title}
+          artist = {newArtWorks2.artist_title}
+          urlFoto = {newArtWorks2.image_id}
+          description = {newArtWorks2.department_title
+          
+          }
+          originPlace = {newArtWorks2.place_of_origin
+          }
+          startDate ={newArtWorks2.date_start}
+      />
+    }
+    <br></br>
+  </div>
+  <div className="media-scroller">
+  {
+    artWorks.map(
+      (data, index) => {
+        return(
+          
+          <CardList
+          key = {index}
+          keyIndex = {index}
+          title = {data.title}
+          artist = {data.artist_title}
+          urlFoto = {data.image_id}
+          description = {data.department_title
+          
+          }
+          originPlace = {data.place_of_origin
+          }
+          startDate ={data.date_start}
+          />
+          
+        )
+      }
+    )
+  }
+  </div>
+  
+    
+  </div>
+);
+
+}
+export default App;
