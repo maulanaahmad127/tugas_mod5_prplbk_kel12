@@ -1,25 +1,57 @@
 import logo from './logo.svg';
 import './App.css';
+import Form from './components/Form';
+import CardList from './components/CardList';
+import React, {useEffect} from 'react';
+
+import axios from "axios";
+
+const BASE_API_URL = `https://api.artic.edu/api/v1/artworks?page=1&limit=5`;
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+  const [artWorks, setArtWorks] = React.useState([]);
+  const [newArtWorks, setNewArtWorks] = React.useState();
+  const [newArtWorks2, setNewArtWorks2] = React.useState([]);
+  useEffect(() => {
+    async function getArtWorks() {
+      await axios
+        .get(`${BASE_API_URL}`)
+        .then((res) => {
+          const responseData = res.data.data;
+          setArtWorks(responseData);
+        })
+        .catch((error) => {
+          console.log(error);
+          window.alert(error);
+        });
+    }
+    getArtWorks();
+  }, []);
 
-export default App;
+  
+
+  const artHandler = (data) => {
+    setNewArtWorks(data)
+    
+    newArtWorks.forEach(data =>  {
+      console.info(data.api_link);
+       axios
+        .get(`${data.api_link}`)
+        .then((res) => {
+          let responseData = res.data.data;
+          setNewArtWorks2(responseData);
+        })
+        .catch((error) => {
+          console.log(error);
+          window.alert(error);
+        });
+    });
+    
+  }
+
+ const resetArr = () => {
+  setNewArtWorks2(null);
+ }
+ }
